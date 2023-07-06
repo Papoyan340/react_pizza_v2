@@ -26,6 +26,13 @@
         background-color: #282828;
         color: #fff;
       }
+
+      @media (max-width: 800px) {
+        padding: 5px 15px;
+        font-size: 14px;
+        justify-content: center;
+      }
+
     }
   }
 }

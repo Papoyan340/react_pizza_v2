@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styles from './NotFoundBlock.module.scss'
-console.log(styles);
+
 function NodFoundBlock() {
   return (
     <div className={styles.root}>

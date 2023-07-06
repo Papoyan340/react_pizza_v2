@@ -12,6 +12,7 @@
 
     b {
       margin-right: 8px;
+      
     }
 
     span {
@@ -19,6 +20,13 @@
       border-bottom: 1px dashed $orange;
       cursor: pointer;
     }
+
+    @media (max-width: 530px) {
+      b {
+        display: none;
+      }
+    }
+
   }
 
   &__popup {
@@ -30,7 +38,7 @@
     border-radius: 10px;
     overflow: hidden;
     padding: 10px 0;
-    width: 160px;
+    // width: 160px;
 
     ul {
       overflow: hidden;

@@ -2,11 +2,12 @@ import React from 'react';
 
 const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
-function Categories() {
-   const [activeIndex, setActiveIndex] = React.useState(0);
-   const onClickCategories = React.useCallback((idx) => {
-         setActiveIndex(idx);
-      },[activeIndex]);
+function Categories({categoruId, onClickCategories}) {
+
+   // const [activeIndex, setActiveIndex] = React.useState(0);
+   // const onClickCategories = React.useCallback((idx) => {
+   //       setActiveIndex(idx);
+   //    },[activeIndex]);
 
    return (
       <div className="categories">
@@ -22,7 +23,7 @@ function Categories() {
                <li
                   key={`${el}_${idx}`}
                   onClick={() => onClickCategories(idx)}
-                  className={activeIndex === idx ? 'active' : ''}>
+                  className={categoruId === idx ? 'active' : ''}>
                   {el}
                </li>
             ))}
