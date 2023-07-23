@@ -1,7 +1,5 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { addUser } from './redux/slices/filterSlices'
 import { Header } from './Components/index';
 import { Cart, Home, NotFound } from './pages/index';
 

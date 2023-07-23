@@ -6,7 +6,7 @@ import {SearchContext}  from "../../App";
 
 function Header() {
 
-   const {searcValue, setSearchValue} = React.useContext(SearchContext)
+   
 
    return (
       <div className="header">
@@ -20,7 +20,7 @@ function Header() {
                   </div>
                </div>
             </Link>
-            <Search searcValue={searcValue} setSearchValue={setSearchValue} />
+            <Search />
             <div className="header__cart">
                <Link to="/cart" className="button button--cart">
                   <span>520 ₽</span>

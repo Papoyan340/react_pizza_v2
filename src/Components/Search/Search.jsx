@@ -1,9 +1,30 @@
 import React from 'react';
-
+import debounce from 'lodash.debounce';
+import {SearchContext}  from "../../App";
 import styles from './Searc.module.scss';
 
+function Search() {
+   const {setSearchValue} = React.useContext(SearchContext)
+   const inpRef = React.useRef();
+   const [value, setValus] = React.useState('')
+   const onClickfocus = () => {
+      // document.querySelector('input').focus()
+      inpRef.current.focus();
+      setSearchValue('')
+      setValus('');
+   };
 
-function Search({ searcValue, setSearchValue }) {
+   const updateSearshValue = React.useCallback(
+      debounce((txt) => {
+         setSearchValue(txt);
+      }, 500),
+      [],
+   );
+   const onChangeInput = (e) => {
+      setValus(e.target.value);
+      updateSearshValue(e.target.value);
+   };
+
    return (
       <div className={styles.root}>
          <svg className={styles.searchIcon} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -11,20 +32,21 @@ function Search({ searcValue, setSearchValue }) {
             <path d="M0 0h48v48h-48z" fill="none" />
          </svg>
          <input
-            value={searcValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+            ref={inpRef}
+            value={value}
+            onChange={(e) => onChangeInput(e)}
             className={styles.input}
             type="text"
             placeholder="поиск пиццы ..."
          />
          <svg
-            onClick={() => setSearchValue('')}
+            onClick={() => onClickfocus()}
             className={styles.closeIcon}
             version="1.1"
             viewBox="0 0 80 80"
             xmlns="http://www.w3.org/2000/svg">
             <title />
-            {searcValue && (
+            {value && (
                <g id="Layer_2">
                   <g id="Layer_3">
                      <path d="M40,5.4C20.9,5.4,5.4,20.9,5.4,40c0,19.1,15.5,34.6,34.5,34.6S74.5,59.1,74.6,40c0,0,0,0,0,0C74.5,20.9,59.1,5.5,40,5.4z     M40,71.6C22.6,71.6,8.4,57.4,8.4,40C8.4,22.6,22.6,8.4,40,8.4c17.4,0,31.6,14.1,31.6,31.5c0,0,0,0,0,0    C71.5,57.4,57.4,71.5,40,71.6z" />

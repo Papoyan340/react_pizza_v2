@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSort } from '../../redux/slices/filterSlice';
 const list = [
    { name: 'популярности (DESC)', sortproperty: 'rating' },
    { name: 'популярности (ASC)', sortproperty: '-rating' },
@@ -8,8 +9,10 @@ const list = [
    { name: 'алфавиту (DESC)', sortproperty: 'title' },
    { name: 'алфавиту (ASC)', sortproperty: '-title' },
 ];
-function Sort({ sortType, onClickSort }) {
+function Sort({sort}) {
+   const dispatch = useDispatch()
    const [open, setOpen] = React.useState(false);
+
 
    const handleMouseClick = () => setOpen(false);
    useEffect(() => {
@@ -19,9 +22,12 @@ function Sort({ sortType, onClickSort }) {
 
    const onClickSortList = (e, obj) => {
       e.stopPropagation();
-      onClickSort(obj);
+      dispatch(setSort(obj))
+      // onClickSort(obj);
       setOpen((prev) => !prev);
    };
+
+ 
 
    return (
       <div className="sort">
@@ -43,7 +49,7 @@ function Sort({ sortType, onClickSort }) {
                   e.stopPropagation();
                   setOpen((prev) => !prev);
                }}>
-               {sortType.name}
+               {sort.name}
             </span>
          </div>
          {open && (
@@ -53,7 +59,7 @@ function Sort({ sortType, onClickSort }) {
                      <li
                         key={idx}
                         onClick={(e) => onClickSortList(e, obj)}
-                        className={sortType.sortproperty === obj.sortproperty ? 'active' : ''}>
+                        className={sort.sortproperty === obj.sortproperty ? 'active' : ''}>
                         {obj.name}
                      </li>
                   ))}
@@ -64,4 +70,5 @@ function Sort({ sortType, onClickSort }) {
    );
 }
 
-export default Sort;
+export default memo(Sort, (prev, next)=> JSON.stringify(prev) === JSON.stringify(next));
+
