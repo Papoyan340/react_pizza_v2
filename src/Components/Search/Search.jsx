@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import {SearchContext}  from "../../App";
 import styles from './Searc.module.scss';
 
-function Search() {
+function Search({f1}) {
    const {setSearchValue} = React.useContext(SearchContext)
    const inpRef = React.useRef();
    const [value, setValus] = React.useState('')
    const onClickfocus = () => {
+
       // document.querySelector('input').focus()
       inpRef.current.focus();
       setSearchValue('')
       setValus('');
    };
 
+
    const updateSearshValue = React.useCallback(
       debounce((txt) => {
          setSearchValue(txt);
-      }, 500),
+      }, 5),
       [],
    );
    const onChangeInput = (e) => {
@@ -60,4 +62,4 @@ function Search() {
    );
 }
 
-export default Search;
+export default React.memo(Search);

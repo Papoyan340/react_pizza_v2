@@ -1,7 +1,7 @@
 import React, { useEffect, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSort } from '../../redux/slices/filterSlice';
-const list = [
+export const sortList = [
    { name: 'популярности (DESC)', sortproperty: 'rating' },
    { name: 'популярности (ASC)', sortproperty: '-rating' },
    { name: 'цене (DESC)', sortproperty: 'price' },
@@ -9,28 +9,47 @@ const list = [
    { name: 'алфавиту (DESC)', sortproperty: 'title' },
    { name: 'алфавиту (ASC)', sortproperty: '-title' },
 ];
-function Sort({sort}) {
-   const dispatch = useDispatch()
+function Sort({ sort }) {
+   const dispatch = useDispatch();
    const [open, setOpen] = React.useState(false);
+   const soerRef = React.useRef();
 
+   const handleMouseClick = (e) => {
+      const path = e.composedPath ? e.composedPath() : e.path;
 
-   const handleMouseClick = () => setOpen(false);
+      if (!path.includes(soerRef.current)) {
+         setOpen(false);
+         console.log('click');
+      }
+   };
+
+   // useEffect(() => {
+   //    window.addEventListener('click', handleMouseClick);
+   //    return () => window.removeEventListener('click', handleMouseClick);
+   // }, [open]);
+
    useEffect(() => {
+      const handleMouseClick = (e) => {
+         const path = e.composedPath ? e.composedPath() : e.path;
+
+         if (!path.includes(soerRef.current)) {
+            setOpen(false);
+         }
+      };
+
       window.addEventListener('click', handleMouseClick);
       return () => window.removeEventListener('click', handleMouseClick);
-   }, [open]);
+   }, []);
 
    const onClickSortList = (e, obj) => {
-      e.stopPropagation();
-      dispatch(setSort(obj))
+      // e.stopPropagation();
+      dispatch(setSort(obj));
       // onClickSort(obj);
       setOpen((prev) => !prev);
    };
 
- 
-
    return (
-      <div className="sort">
+      <div ref={soerRef} className="sort">
          <div className="sort__label">
             <svg
                width={10}
@@ -46,7 +65,7 @@ function Sort({sort}) {
             <b>Сортировка по:</b>
             <span
                onClick={(e) => {
-                  e.stopPropagation();
+                  // e.stopPropagation();
                   setOpen((prev) => !prev);
                }}>
                {sort.name}
@@ -55,7 +74,7 @@ function Sort({sort}) {
          {open && (
             <div className="sort__popup">
                <ul>
-                  {list.map((obj, idx) => (
+                  {sortList.map((obj, idx) => (
                      <li
                         key={idx}
                         onClick={(e) => onClickSortList(e, obj)}
@@ -70,5 +89,4 @@ function Sort({sort}) {
    );
 }
 
-export default memo(Sort, (prev, next)=> JSON.stringify(prev) === JSON.stringify(next));
-
+export default memo(Sort, (prev, next) => JSON.stringify(prev) === JSON.stringify(next));
