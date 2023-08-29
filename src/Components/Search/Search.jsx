@@ -1,31 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import debounce from 'lodash.debounce';
-import {SearchContext}  from "../../App";
+import { useDispatch} from 'react-redux';
+import { setSearchValue } from '../../redux/slices/filterSlice';
+
+
+
 import styles from './Searc.module.scss';
 
-function Search({f1}) {
-   const {setSearchValue} = React.useContext(SearchContext)
+function Search() {
    const inpRef = React.useRef();
    const [value, setValus] = React.useState('')
-   const onClickfocus = () => {
+   const dispatch = useDispatch()
 
-      // document.querySelector('input').focus()
+   const onClickfocus = () => {
       inpRef.current.focus();
-      setSearchValue('')
+      dispatch(setSearchValue(''))
       setValus('');
    };
 
 
    const updateSearshValue = React.useCallback(
       debounce((txt) => {
-         setSearchValue(txt);
-      }, 5),
+         dispatch(setSearchValue(txt))
+      }, 1000),
       [],
    );
    const onChangeInput = (e) => {
+      // dispatch(setSearchValue(e.target.value))
       setValus(e.target.value);
       updateSearshValue(e.target.value);
    };
+
+   
 
    return (
       <div className={styles.root}>

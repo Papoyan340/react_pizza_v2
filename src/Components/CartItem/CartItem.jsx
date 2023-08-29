@@ -6,18 +6,18 @@ import {
    removeProductFromCart,
 } from '../../redux/slices/cartSlice';
 
-function CartItem({ imageUrl, title, size, type, count, price, id, totalPrice }) {
+function CartItem({ imageUrl, title, size, type, count, price, id, totalPrice, typeofproduct }) {
    const dispatch = useDispatch();
 
    const onClickPlus = () => {
-      dispatch(addProductToCart({ id }));
+      dispatch(addProductToCart({ id, size, type }));
    };
    const onClickminus = () => {
       if (count < 1) {
          window.confirm('Do you really want to remove the pizza ? ') &&
             dispatch(removeProductFromCart(id));
       } else {
-         dispatch(minusItemCart(id));
+         dispatch(minusItemCart({id, size, type}));
       }
    };
 
@@ -27,6 +27,8 @@ function CartItem({ imageUrl, title, size, type, count, price, id, totalPrice })
       }
    };
 
+   
+
    return (
       <div className="cart__item">
          <div className="cart__item-img">
@@ -34,9 +36,15 @@ function CartItem({ imageUrl, title, size, type, count, price, id, totalPrice })
          </div>
          <div className="cart__item-info">
             <h3>{title}</h3>
-            <p>
+
+            <ul>
+            {
+               typeofproduct.map(obj => <li key={`${obj.typeNames}_${obj.sizeNames}`}>{obj.typeNames}<span>  ({obj.sizeNames}см.) </span>- {obj.count}</li>)
+            }
+            </ul>
+            {/* <p>
                {type} тесто, {size} см.
-            </p>
+            </p> */}
          </div>
          <div className="cart__item-count">
             <div

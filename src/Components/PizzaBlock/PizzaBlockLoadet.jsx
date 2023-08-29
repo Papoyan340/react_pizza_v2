@@ -11,6 +11,7 @@ const PizzaBlockLoadet = (props) => (
   backgroundColor="#f3f3f3"
   foregroundColor="#FFDF8C"
   {...props}
+  
 >
   <circle cx="139" cy="125" r="120" /> 
   <rect x="0" y="276" rx="10" ry="10" width="280" height="27" /> 
