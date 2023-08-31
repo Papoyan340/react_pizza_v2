@@ -16,6 +16,8 @@ function Pagination({pageCount,onChangePag}) {
    previousLabel="<"
    renderOnZeroPageCount={null}
  />
+
+ 
   )
 }
 

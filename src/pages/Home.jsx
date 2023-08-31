@@ -12,8 +12,6 @@ import { Categories, Sort, PizzaBlock, PizzaBlockLoadet, Pagination } from '../C
 import { SearchContext } from '../App';
 import { sortList } from '../Components/Sort/Sort';
 
-
-
 function Home() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
@@ -22,9 +20,6 @@ function Home() {
 
    const { categoryId, sort, pageCount, searcValue } = useSelector((store) => store.filter);
    const { dataPizzas, status } = useSelector((store) => store.pizzas);
-  
-
-
 
    // const { searcValue } = React.useContext(SearchContext);
 
@@ -72,7 +67,7 @@ function Home() {
       //    });
 
       // ..............................
-      
+
       // try {
       //    const res = await axios.get(url);
       //    dispatch(setdataPizza(res.data))
@@ -85,20 +80,19 @@ function Home() {
    };
 
    // ete popoxvel e inchvor category ev exel e arajin render@
-   React.useEffect(() => {
-      if (isMounted.current) {
-         const queryString = qs.stringify({
-            sortproperty: sort.sortproperty,
-            categoryId,
-            pageCount,
-         });
-         navigate(`?${queryString}`);
-      }
-      isMounted.current = true;
-   }, [categoryId, sort.sortproperty, pageCount]);
+   // React.useEffect(() => {
+   //    if (isMounted.current) {
+   //       const queryString = qs.stringify({
+   //          sortproperty: sort.sortproperty,
+   //          categoryId,
+   //          pageCount,
+   //       });
+   //       navigate(`?${queryString}`);
+   //    }
+   //    isMounted.current = true;
+   // }, [categoryId, sort.sortproperty, pageCount]);
 
-
-
+   
    // ete exel e araji render@ stugum enq URL hascen ev ayn pahum enq redax um
    // React.useEffect(() => {
    //    if (window.location.search) {
@@ -127,14 +121,14 @@ function Home() {
       getPizzas();
    }, [categoryId, sort.sortproperty, searcValue, pageCount]);
 
-   const onClickCategories =(idx)=> {
-      dispatch(setCategoruId(idx))
-      dispatch(setPageCount(1))
-   }
+   const onClickCategories = (idx) => {
+      dispatch(setCategoruId(idx));
+      dispatch(setPageCount(1));
+   };
 
    const pizzas = dataPizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
    const skeleton = [...new Array(8)].map((_, idx) => <PizzaBlockLoadet key={idx} />);
-  
+
    return (
       <>
          <div className="content__top">
@@ -152,7 +146,7 @@ function Home() {
                   Произошла ошибка <icon>😕</icon>
                </h2>
                <p>
-                  К сожалению не удалось получать  пиццы <br/>
+                  К сожалению не удалось получать пиццы <br />
                   Попробуйте Повторить попытку позже
                </p>
             </div>
@@ -160,9 +154,9 @@ function Home() {
             <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
          )}
 
-         {
-            status === 'succes'  && <Pagination pageCount={pageCount} onChangePag={(num) => dispatch(setPageCount(num))} />
-         }
+         {status === 'succes' && (
+            <Pagination pageCount={pageCount} onChangePag={(num) => dispatch(setPageCount(num))} />
+         )}
       </>
    );
 }
